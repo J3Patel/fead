@@ -5,7 +5,6 @@ import time
 import pyttsx3
 import random
 
-
 interrupted = False
 
 def turnMonitorOff():
