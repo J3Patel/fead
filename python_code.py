@@ -5,26 +5,32 @@ import time
 import pyttsx3
 import random
 
-engine = pyttsx3.init()
+
 interrupted = False
-engine.say("Hello")
-engine.runAndWait()
 
 def turnMonitorOff():
-	engine.say("please complete the task to start monitor")
+	engine = pyttsx3.init()
+	engine.say("please complete the task to turn on dispaly")
 	engine.runAndWait()
+	# engine.stop()
 	print("Monitor turn off")
 
 def turnMonitorOn():
+	engine = pyttsx3.init()
+	engine.say("Task completed, Turning on the display")
+	engine.runAndWait()
+	# engine.stop()
 	print("Monitor turn on")
 
 def callback(collectionSnap , documentChange, readTime):
-    for doc in documentChange:
-        if doc.document.to_dict()['isDone'] == True:
-            print("Task Completed")
-            turnMonitorOn()
-        else:
-        	turnMonitorOff()
+	print("callback")
+	for doc in documentChange:
+		if not doc.document.to_dict()['isDone']:
+			print("Taks uncompleete")
+			turnMonitorOff()
+		else:
+			print("Task Completed")
+			turnMonitorOn()
 
 def listenToFirebase():
     db = firestore.Client()
@@ -49,7 +55,6 @@ def addNewTask():
 	doc_ref.set(data)
 
 def job():
-    
     addNewTask()
     print("hello working ")
 
