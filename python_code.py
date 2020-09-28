@@ -4,21 +4,26 @@ import schedule as s
 import time
 import pyttsx3
 import random
+import RPi.GPIO as GPIO
 
 interrupted = False
 
 def turnMonitorOff():
 	engine = pyttsx3.init()
-	engine.say("please complete the task to turn on dispaly")
+	engine.setProperty('rate', 180)
+	engine.say("please complete the task to turn on display")
 	engine.runAndWait()
-	# engine.stop()
+	GPIO.output(14, GPIO.HIGH)
+	engine.stop()
 	print("Monitor turn off")
 
 def turnMonitorOn():
+	GPIO.output(14, GPIO.LOW)
 	engine = pyttsx3.init()
+	engine.setProperty('rate', 180)
 	engine.say("Task completed, Turning on the display")
 	engine.runAndWait()
-	# engine.stop()
+	engine.stop()
 	print("Monitor turn on")
 
 def callback(collectionSnap , documentChange, readTime):
@@ -68,7 +73,10 @@ def stopHourly():
 startHourly();
 listenToFirebase();
 signal.signal(signal.SIGINT, signal_handler)
-
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(14, GPIO.OUT)
+GPIO.output(14, GPIO.HIGH)
 
 while not interrupted:
 	# sensorDataRead()
@@ -77,3 +85,4 @@ while not interrupted:
 
 
 # export GOOGLE_APPLICATION_CREDENTIALS="/j/Work/Teenenggr/Projects/26 - fitness moti - 1 Sept/key.json"
+# export GOOGLE_APPLICATION_CREDENTIALS="/home/pi/exer_dev/fead/key.json"
