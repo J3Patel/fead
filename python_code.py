@@ -64,8 +64,7 @@ def job():
 
 def startHourly():
     print("hourly started")
-    # s.every().hours.tag("hourly").do(job)
-    s.every(1).minutes.tag("minutoy").do(job)
+    s.every(1).hours.tag("hourly").do(job)
 
 def stopHourly():
 	s.clear("hourly")
