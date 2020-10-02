@@ -4,7 +4,7 @@ import schedule as s
 import time
 import pyttsx3
 import random
-import RPi.GPIO as GPIO
+import os
 
 interrupted = False
 
@@ -17,6 +17,7 @@ def signal_handler(signal, frame):
 
 def job():
     print("hello working ")
+    os.system('aplay -d 20 and_mand.wav')
 
 def startHourly():
     print("hourly started")
